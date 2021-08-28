@@ -64,9 +64,23 @@ const buildResponse = (response, statusCode, data, preTag) => {
   });
 };
 
-
+app.get("/kayan", bustHeaders, xmlparser(xmlOptions), async (request, response) => {
+  const { drug, disease, type } = (request.body['Request'] || request.body);
+  console.log(drug);
+  if (request.app.isXml) {
+    response.setHeader('Content-Type', 'application/xml');
+  }
+  await pool.query(
+    "SELECT * FROM interactions WHERE drug= $1 and disease=$2 and type=$3",[drug,disease,type],(err,res)=>{
+      if(!err){
+        return buildResponse(response, 200, res.rows, 'Response');
+      }else{
+        return buildResponse(response, 500, { message: 'INTERNAL SERVER ERROR' })
+      }
+    }
+  );
+});
 app.get("/kayan/:drug/:disease/:type", bustHeaders, xmlparser(xmlOptions), async (request, response) => {
-  // const { drug, disease, type } = (request.body['Request'] || request.body);
   const { drug, disease, type }=request.params
   console.log(drug);
   if (request.app.isXml) {
