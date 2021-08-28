@@ -8,6 +8,7 @@ import {
     Input,
     Button,
   } from "@material-ui/core";
+import Show from './Show';
 const Main = () => {
     const[drug,setDrug]=useState("")
     const[disease,setDisease]=useState("")
@@ -96,11 +97,7 @@ const Main = () => {
             // console.log(resultf)
         
         <div className="container d-flex justify-content-center align-items-center h-100">
-            <div className="row">
-                <h1>{resultf.Response["drug"][0]}</h1>
-                <p>{resultf.Response["description"][0]}</p>   
-                    
-            </div>
+            <Show resultf={resultf}/>
         </div>:""
         }
       </div>
