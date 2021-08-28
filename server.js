@@ -65,8 +65,9 @@ const buildResponse = (response, statusCode, data, preTag) => {
 };
 
 
-app.get("/kayan", bustHeaders, xmlparser(xmlOptions), async (request, response) => {
-  const { drug, disease, type } = (request.body['Request'] || request.body);
+app.get("/kayan/:drug/:disease/:type", bustHeaders, xmlparser(xmlOptions), async (request, response) => {
+  // const { drug, disease, type } = (request.body['Request'] || request.body);
+  const { drug, disease, type }=request.params
   console.log(drug);
   if (request.app.isXml) {
     response.setHeader('Content-Type', 'application/xml');

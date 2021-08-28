@@ -17,38 +17,41 @@ const Main = () => {
     
     
     const searchDrug=(e)=>{
-        const xmlData = `
-        <Request>
-            <drug>${drug}</drug>
-            <disease>${disease}</disease>
-            <type>${type}</type>
-        </Request>
-        `;
-        var config = {
-            headers: {'Content-Type': 'text/xml'}
-        };
+        // const xmlData = `
+        // <Request>
+        //     <drug>${drug}</drug>
+        //     <disease>${disease}</disease>
+        //     <type>${type}</type>
+        // </Request>
+        // `;
+        // var config = {
+        //     headers: {'Content-Type': 'text/xml'}
+        // };
         e.preventDefault()
         
-        axios.get('https://localhost:8000/kayan',xmlData, config)
-        // .then((response ) => {
-        //     xml2js.parseString(response.data,(err, result) => {
-        //         if(err) {
-        //             throw err;
-        //         }
-        //         // `result` is a JavaScript object
-        //         // convert it to a JSON string
-        //         setResultf(JSON.stringify(result, null, 4))
+        axios.get(`https://localhost:8000/kayan/${drug}/${disease}/${type}`)
+        .then((response ) => {
+            xml2js.parseString(response.data,(err, result) => {
+                if(err) {
+                    throw err;
+                }
+                // `result` is a JavaScript object
+                // convert it to a JSON string
+                setResultf(JSON.stringify(result, null, 4))
             
-        //         // log JSON string
-        //         console.log(resultf);
-        //         console.log("done");
-        //   })})
+                // log JSON string
+                console.log(resultf);
+                console.log("done");
+          })})
         .then((response)=>{
             console.log("done");
         })
         .catch((err) => {
             alert("The Durg you trying to find doesn't exist!")
         })
+        setDrug("")
+        setDisease("")
+        setType(1)
     }
     
     return (
