@@ -29,7 +29,7 @@ const Main = () => {
         // };
         e.preventDefault()
         
-        axios.get(`https://localhost:8000/kayan/${drug}/${disease}/${type}`)
+        axios.get(`http://localhost:8000/kayan/${drug}/${disease}/${type}`)
         .then((response ) => {
             xml2js.parseString(response.data,(err, result) => {
                 if(err) {
@@ -43,9 +43,6 @@ const Main = () => {
                 console.log(resultf);
                 console.log("done");
           })})
-        .then((response)=>{
-            console.log("done");
-        })
         .catch((err) => {
             alert("The Durg you trying to find doesn't exist!")
         })
