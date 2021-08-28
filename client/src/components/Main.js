@@ -16,17 +16,19 @@ const Main = () => {
     const[resultf,setResultf]=useState()
     
     
-    const searchDrug=()=>{
+    const searchDrug=(e)=>{
         const xmlData = `
         <Request>
-              <drug>${drug}</drug>
-              <disease>${disease}</disease>
-              <type>${type}</type>
+            <drug>${drug}</drug>
+            <disease>${disease}</disease>
+            <type>${type}</type>
         </Request>
         `;
         var config = {
             headers: {'Content-Type': 'text/xml'}
         };
+        e.preventDefault()
+        
         axios.get('https://localhost:8000/kayan',xmlData, config)
         // .then((response ) => {
         //     xml2js.parseString(response.data,(err, result) => {
