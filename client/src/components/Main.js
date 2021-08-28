@@ -14,13 +14,15 @@ const Main = () => {
     const[type,setType]=useState(1)
     const[result,setResult]=useState()
     const requestBody = {
-        "drug": drug,
-        "disease": disease,
-        "type": type
+        "request":{
+            "drug": drug,
+            "disease": disease,
+            "type": type
+        }
       }
     const options = {
         method: 'GET',
-        headers: { 'content-type': 'application/x-www-form-urlencoded' },
+        headers: {'Content-Type': 'text/xml'},
         data: qs.stringify(requestBody),
         url:'https://localhost:8000/kayan',
       };
