@@ -1,7 +1,6 @@
 import React,{useState} from 'react'
 import axios from 'axios'
 import xml2js from 'xml2js'
-// import qs from 'qs'
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import {
@@ -42,8 +41,9 @@ const Main = () => {
                 console.log("done");
           })})
         .catch((err) => {
-            alert("The Durg you trying to find doesn't exist!")
+            alert("The Durg you trying to find doesn't exist or there is an input error!")
         })
+        
         setDrug("")
         setDisease("")
         setType(1)
@@ -92,17 +92,17 @@ const Main = () => {
           
         </form>
         </div>
-        {loaded&&(
-            console.log(resultf)
+        {resultf?
+            // console.log(resultf)
         
-        // <div className="container d-flex justify-content-center align-items-center h-100">
-        //     <div className="row">
-        //         <h1>{resultf.Response.durg}</h1>
-        //         <p>{resultf.Response.description}</p>   
+        <div className="container d-flex justify-content-center align-items-center h-100">
+            <div className="row">
+                <h1>{resultf.Response["drug"][0]}</h1>
+                <p>{resultf.Response["description"][0]}</p>   
                     
-        //     </div>
-        // </div>
-        )}
+            </div>
+        </div>:""
+        }
       </div>
 
             
