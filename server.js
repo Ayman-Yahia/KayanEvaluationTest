@@ -6,6 +6,7 @@ const helmet=require('helmet')
 const xmlparser=require('express-xml-bodyparser')
 const xml=require('xml2js')
 const pool = require("./db");
+const cors = require('cors');
 
 
 pool.query("Select * from interactions where id=3",(err,res)=>{
@@ -19,7 +20,7 @@ pool.query("Select * from interactions where id=3",(err,res)=>{
 const port = process.env.PORT || 8000;
 const app = express();
 
-
+app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(helmet());
