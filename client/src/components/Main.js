@@ -17,19 +17,19 @@ const Main = () => {
     
     
     const searchDrug=(e)=>{
-        // const xmlData = `
-        // <Request>
-        //     <drug>${drug}</drug>
-        //     <disease>${disease}</disease>
-        //     <type>${type}</type>
-        // </Request>
-        // `;
-        // var config = {
-        //     headers: {'Content-Type': 'text/xml'}
-        // };
+        const xmlData = `
+        <Request>
+            <drug>${drug}</drug>
+            <disease>${disease}</disease>
+            <type>${type}</type>
+        </Request>
+        `;
+        var config = {
+            headers: {'Content-Type': 'text/xml'}
+        };
         e.preventDefault()
         
-        axios.get(`http://localhost:8000/kayan/${drug}/${disease}/${type}`)
+        axios.post('http://localhost:8000/kayan',xmlData,config)
         .then((response ) => {
             xml2js.parseString(response.data,(err, result) => {
                 if(err) {
