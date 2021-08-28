@@ -9,7 +9,7 @@ const pool = require("./db");
 const cors = require('cors');
 
 
-pool.query("Select * from interactions where id=3",(err,res)=>{
+pool.query("Select * from interactions where id=1",(err,res)=>{
   if(!err){
     console.log(res.rows);
   }else{
@@ -97,18 +97,18 @@ app.get("/kayan/:drug/:disease/:type", bustHeaders, xmlparser(xmlOptions), async
     }
   );
 });
-// app.post('/kayan', bustHeaders, xmlparser(xmlOptions), async  (request, response) => {
-//   const { drug,description, disease, type } = (request.body['request'] || request.body);
-//       await pool.query(
-//         `INSERT INTO interactions (drug,description,disease,type) values($1,$2,$3,$4 ) RETURNING drug `,[drug,description,disease,type],(err,res)=>{
-//           if(!err){
-//             return buildResponse(response, 200, res, 'response');
-//           }else{
-//             return buildResponse(response, 500, { message: 'INTERNAL SERVER ERROR' })
-//           }
-//         }
-//       );
-// });
+app.post('/kayans', bustHeaders, xmlparser(xmlOptions), async  (request, response) => {
+  const { drug,description, disease, type } = (request.body['request'] || request.body);
+      await pool.query(
+        `INSERT INTO interactions (drug,description,disease,type) values($1,$2,$3,$4 ) RETURNING drug `,[drug,description,disease,type],(err,res)=>{
+          if(!err){
+            return buildResponse(response, 200, res, 'response');
+          }else{
+            return buildResponse(response, 500, { message: 'INTERNAL SERVER ERROR' })
+          }
+        }
+      );
+});
 
 // app.get('/kayan', bustHeaders, async (request, response) => {
 
