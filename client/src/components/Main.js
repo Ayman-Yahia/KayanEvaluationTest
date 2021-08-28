@@ -14,41 +14,39 @@ const Main = () => {
     const[disease,setDisease]=useState("")
     const[type,setType]=useState(1)
     const[resultf,setResultf]=useState()
-    var xmlBodyStr = `<?xml version="1.0" encoding="UTF-8"?>
-       <req:KnownTrackingRequest xmlns:req="http://www.example.com" 
-                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
-                xsi:schemaLocation="http://www.example.com
-                TrackingRequestKnown.xsd">
-         <Request>
+    
+    
+    const searchDrug=()=>{
+        const xmlData = `
+        <Request>
               <drug>${drug}</drug>
               <disease>${disease}</disease>
               <type>${type}</type>
-         </Request>
-         <LanguageCode>en</LanguageCode>
-         <AWBNumber>01234567890</AWBNumber>
-         <LevelOfDetails>LAST_CHECK_POINT_ONLY</LevelOfDetails>`;
-         const config = {
+        </Request>
+        `;
+        var config = {
             headers: {'Content-Type': 'text/xml'}
-       };
-    
-    const searchDrug=()=>{
-        axios.get('https://localhost:8000/kayan',xmlBodyStr, config)
-        .then((response ) => {
-            xml2js.parseString(response.data,(err, result) => {
-                if(err) {
-                    throw err;
-                }
-                // `result` is a JavaScript object
-                // convert it to a JSON string
-                setResultf(JSON.stringify(result, null, 4))
+        };
+        axios.get('https://localhost:8000/kayan',xmlData, config)
+        // .then((response ) => {
+        //     xml2js.parseString(response.data,(err, result) => {
+        //         if(err) {
+        //             throw err;
+        //         }
+        //         // `result` is a JavaScript object
+        //         // convert it to a JSON string
+        //         setResultf(JSON.stringify(result, null, 4))
             
-                // log JSON string
-                console.log(resultf);
-                console.log("done");
-          })})
-          .catch((err) => {
+        //         // log JSON string
+        //         console.log(resultf);
+        //         console.log("done");
+        //   })})
+        .then((response)=>{
+            console.log("done");
+        })
+        .catch((err) => {
             alert("The Durg you trying to find doesn't exist!")
-          })
+        })
     }
     
     return (

@@ -8,7 +8,7 @@ const xml=require('xml2js')
 const pool = require("./db");
 
 
-pool.query("Select * from interactions",(err,res)=>{
+pool.query("Select * from interactions where id=3",(err,res)=>{
   if(!err){
     console.log(res.rows);
   }else{
