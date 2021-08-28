@@ -1,6 +1,6 @@
 import React,{useEffect,useState} from 'react'
 import axios from 'axios'
-import QueryString from 'qs'
+import qs from 'qs'
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import {
@@ -9,11 +9,9 @@ import {
     Button,
   } from "@material-ui/core";
 const Main = () => {
-    const[kayan,setKayan]=useState([])
-    const[loaded,setLoaded]=useState(false)
-    const[drug,setDrug]=useState("")
-    const[disease,setDisease]=useState("")
-    const[type,setType]=useState(1)
+    const[drug1,setDrug1]=useState("")
+    const[disease1,setDisease1]=useState("")
+    const[type1,setType1]=useState(1)
     const[result,setResult]=useState()
     const config = {
         headers: {
@@ -21,12 +19,12 @@ const Main = () => {
         }
       }
     const requestBody = {
-        drug: drug,
-        disease: disease,
-        type: type
+        drug: drug1,
+        disease: disease1,
+        type: type1
       }
     const searchDrug=()=>{
-        axios.get('https://localhost:8000/kayan', QueryString.stringify(requestBody), config)
+        axios.get('https://localhost:8000/kayan',qs.stringify(requestBody),config)
         .then((result) => {
             setResult(result.data)
             console.log("done");
@@ -52,19 +50,19 @@ const Main = () => {
           <h1>Search Page</h1>
           <FormControl margin="normal" fullWidth>
             <InputLabel htmlFor="novelName">Drug Name</InputLabel>
-            <Input id="novelName" value={drug} onChange={ e => setDrug(e.target.value) } type="text" required/>
+            <Input id="novelName" value={drug1} onChange={ e => setDrug1(e.target.value) } type="text" required/>
           </FormControl>
 
           <FormControl margin="normal" fullWidth>
             <InputLabel htmlFor="desc">Disease Name</InputLabel>
-            <Input id="desc" value={disease} onChange={ e => setDisease(e.target.value) } type="desc" required/>
+            <Input id="desc" value={disease1} onChange={ e => setDisease1(e.target.value) } type="desc" required/>
           </FormControl>
         <FormControl >
         <InputLabel htmlFor="age-native-simple">Type:</InputLabel>
         <Select
           native
-          value={type}
-          onChange={ e => setType(e.target.value) }
+          value={type1}
+          onChange={ e => setType1(e.target.value) }
         >
           <option aria-label="None" value={1} >1</option>
           <option aria-label="None" value={2} >2</option>
