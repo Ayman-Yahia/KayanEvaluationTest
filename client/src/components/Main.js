@@ -1,6 +1,7 @@
-import React,{useEffect,useState} from 'react'
+import React,{useState} from 'react'
 import axios from 'axios'
-import qs from 'qs'
+import xml2js from 'xml2js'
+// import qs from 'qs'
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import {
@@ -12,33 +13,44 @@ const Main = () => {
     const[drug,setDrug]=useState("")
     const[disease,setDisease]=useState("")
     const[type,setType]=useState(1)
-    const[result,setResult]=useState()
-    const requestBody = {
-        "request":{
-            "drug": drug,
-            "disease": disease,
-            "type": type
-        }
-      }
-    const options = {
-        method: 'GET',
-        headers: {'Content-Type': 'text/xml'},
-        data: qs.stringify(requestBody),
-        url:'https://localhost:8000/kayan',
-      };
+    const[resultf,setResultf]=useState()
+    var xmlBodyStr = `<?xml version="1.0" encoding="UTF-8"?>
+       <req:KnownTrackingRequest xmlns:req="http://www.example.com" 
+                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+                xsi:schemaLocation="http://www.example.com
+                TrackingRequestKnown.xsd">
+         <Request>
+              <drug>${drug}</drug>
+              <disease>${disease}</disease>
+              <type>${type}</type>
+         </Request>
+         <LanguageCode>en</LanguageCode>
+         <AWBNumber>01234567890</AWBNumber>
+         <LevelOfDetails>LAST_CHECK_POINT_ONLY</LevelOfDetails>`;
+         const config = {
+            headers: {'Content-Type': 'text/xml'}
+       };
     
     const searchDrug=()=>{
-        axios.get(options)
-        .then((result) => {
-            setResult(result.data)
-            console.log("done");
-          })
+        axios.get('https://localhost:8000/kayan',xmlBodyStr, config)
+        .then((response ) => {
+            xml2js.parseString(response.data,(err, result) => {
+                if(err) {
+                    throw err;
+                }
+                // `result` is a JavaScript object
+                // convert it to a JSON string
+                setResultf(JSON.stringify(result, null, 4))
+            
+                // log JSON string
+                console.log(resultf);
+                console.log("done");
+          })})
           .catch((err) => {
             alert("The Durg you trying to find doesn't exist!")
           })
     }
     
-            
     return (
         <>
         <div
