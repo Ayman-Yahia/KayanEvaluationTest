@@ -14,7 +14,7 @@ const Main = () => {
     const[disease,setDisease]=useState("")
     const[type,setType]=useState(1)
     const[resultf,setResultf]=useState()
-    
+    const [loaded,setLoaded]=useState(false)
     
     const searchDrug=(e)=>{
         const xmlData = `
@@ -38,9 +38,7 @@ const Main = () => {
                 // `result` is a JavaScript object
                 // convert it to a JSON string
                 setResultf(JSON.stringify(result, null, 4))
-            
-                // log JSON string
-                console.log(resultf);
+                setLoaded(true)
                 console.log("done");
           })})
         .catch((err) => {
@@ -62,6 +60,7 @@ const Main = () => {
           minHeight:600+"px"
         }}
       >
+          <div>
         <form onSubmit={searchDrug} style={{ width: "50%" }}>
           <h1>Search Page</h1>
           <FormControl margin="normal" fullWidth>
@@ -92,7 +91,20 @@ const Main = () => {
         </div>
           
         </form>
+        </div>
+        {loaded&&(
+            console.log(resultf)
+        
+        // <div className="container d-flex justify-content-center align-items-center h-100">
+        //     <div className="row">
+        //         <h1>{resultf.Response.durg}</h1>
+        //         <p>{resultf.Response.description}</p>   
+                    
+        //     </div>
+        // </div>
+        )}
       </div>
+
             
         </>
     )
