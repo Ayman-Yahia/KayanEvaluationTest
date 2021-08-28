@@ -54,9 +54,7 @@ const bustHeaders = (request, response, next) => {
 
 const buildResponse = (response, statusCode, data, preTag) => {
   response.format({
-    'application/json': () => {
-      response.status(statusCode).json(data);
-    },
+
     'application/xml': () => {
       response.status(statusCode).send(builder.buildObject({ [preTag]: data }));
     },
