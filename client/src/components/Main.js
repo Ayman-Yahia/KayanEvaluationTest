@@ -27,6 +27,13 @@ const Main = () => {
       }
     const searchDrug=()=>{
         axios.get('https://localhost:8000/kayan', QueryString.stringify(requestBody), config)
+        .then((result) => {
+            setResult(result.data)
+            console.log("done");
+          })
+          .catch((err) => {
+            alert("The Durg you trying to find doesn't exist!")
+          })
     }
     
             
@@ -42,7 +49,7 @@ const Main = () => {
         }}
       >
         <form onSubmit={searchDrug} style={{ width: "50%" }}>
-          <h1>Search Page!</h1>
+          <h1>Search Page</h1>
           <FormControl margin="normal" fullWidth>
             <InputLabel htmlFor="novelName">Drug Name</InputLabel>
             <Input id="novelName" value={drug} onChange={ e => setDrug(e.target.value) } type="text" required/>
