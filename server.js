@@ -1,8 +1,7 @@
 const express = require('express');
 const bodyParser=require('body-parser')
-const pgp=require('pg-promise')
-const promise=require('bluebird')
-const helmet=require('helmet')
+// const pgp=require('pg-promise')
+// const helmet=require('helmet')
 const xmlparser=require('express-xml-bodyparser')
 const xml=require('xml2js')
 const pool = require("./db");
@@ -23,7 +22,7 @@ const app = express();
 app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(helmet());
+// app.use(helmet());
 app.disable('x-powered-by');
 app.set('port', port);
 
@@ -83,7 +82,6 @@ app.post("/kayan", bustHeaders, xmlparser(xmlOptions), async (request, response)
 });
 app.get("/kayan/:drug/:disease/:type", async (request, response) => {
   const { drug, disease, type }=request.params
-  console.log(drug);
   if (request.app.isXml) {
     response.setHeader('Content-Type', 'application/xml');
   }
@@ -97,18 +95,18 @@ app.get("/kayan/:drug/:disease/:type", async (request, response) => {
     }
   );
 });
-app.post('/kayans', bustHeaders, xmlparser(xmlOptions), async  (request, response) => {
-  const { drug,description, disease, type } = (request.body['request'] || request.body);
-      await pool.query(
-        `INSERT INTO interactions (drug,description,disease,type) values($1,$2,$3,$4 ) RETURNING drug `,[drug,description,disease,type],(err,res)=>{
-          if(!err){
-            return buildResponse(response, 200, res, 'response');
-          }else{
-            return buildResponse(response, 500, { message: 'INTERNAL SERVER ERROR' })
-          }
-        }
-      );
-});
+// app.post('/kayans', bustHeaders, xmlparser(xmlOptions), async  (request, response) => {
+//   const { drug,description, disease, type } = (request.body['request'] || request.body);
+//       await pool.query(
+//         `INSERT INTO interactions (drug,description,disease,type) values($1,$2,$3,$4 ) RETURNING drug `,[drug,description,disease,type],(err,res)=>{
+//           if(!err){
+//             return buildResponse(response, 200, res, 'response');
+//           }else{
+//             return buildResponse(response, 500, { message: 'INTERNAL SERVER ERROR' })
+//           }
+//         }
+//       );
+// });
 
 // app.get('/kayan', bustHeaders, async (request, response) => {
 
