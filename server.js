@@ -26,6 +26,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.disable('x-powered-by');
 app.set('port', port);
 
+// XML Parser configurations, https://github.com/Leonidas-from-XIV/node-xml2js#options
 const xmlOptions = {
   charkey: 'value',
   trim: false,
