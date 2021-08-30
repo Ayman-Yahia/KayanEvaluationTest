@@ -8,13 +8,13 @@ const pool = require("./db");
 const cors = require('cors');
 
 
-pool.query("Select * from interactions where id=1",(err,res)=>{
-  if(!err){
-    console.log(res.rows);
-  }else{
-    console.log(err.message);
-  }
-})
+// pool.query("Select * from interactions where id=1",(err,res)=>{
+//   if(!err){
+//     console.log(res.rows);
+//   }else{
+//     console.log(err.message);
+//   }
+// })
 
 const port = process.env.PORT || 8000;
 const app = express();
