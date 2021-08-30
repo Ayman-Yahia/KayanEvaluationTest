@@ -3,6 +3,7 @@ import axios from 'axios'
 import xml2js from 'xml2js'
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
+import XMLParser from 'react-xml-parser';
 import {
     InputLabel,
     Input,
@@ -13,9 +14,8 @@ const Main = () => {
     const[drug,setDrug]=useState("")
     const[disease,setDisease]=useState("")
     const[type,setType]=useState(1)
-    const[resultf,setResultf]=useState()
+    const[resultf,setResultf]=useState(null)
     const [loaded,setLoaded]=useState(false)
-    
     const searchDrug=(e)=>{
         const xmlData = `
         <Request>
@@ -30,20 +30,14 @@ const Main = () => {
         e.preventDefault()
         
         axios.post('http://localhost:8000/kayan',xmlData,config)
-        .then((response ) => {
-            xml2js.parseString(response.data,(err, result) => {
-                if(err) {
-                    throw err;
-                }
-                // `result` is a JavaScript object
-                // convert it to a JSON string
-                setResultf(JSON.stringify(result, null, 4))
-                setLoaded(true)
-                console.log("done");
-          })})
-        .catch((err) => {
-            alert("The Durg you trying to find doesn't exist or there is an input error!")
-        })
+          .then((response ) => {
+              // converting xml response to json file for using in show component
+              setResultf(new XMLParser().parseFromString(response.data))
+            })
+          .catch((err) => {
+              // alert("The Durg you trying to find doesn't exist or there is an input error!")
+              console.log(err);
+          })
         
         setDrug("")
         setDisease("")
@@ -92,9 +86,12 @@ const Main = () => {
             
           </form>
         </div>
-        {resultf?
+        {
+          
+        resultf?
+          // console.log(resultf)
           <div className="container d-flex justify-content-center align-items-center h-100">
-              <Show resultf={resultf}/>
+              <Show result={resultf}/>
           </div>:""
         }
       </div>
