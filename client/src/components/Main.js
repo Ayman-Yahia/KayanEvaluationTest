@@ -52,57 +52,57 @@ const Main = () => {
     
     return (
         <>
-        <div
+      <div
         style={{
-          display: "flex",
           justifyContent: "center",
-          padding: 20,
-		  backgroundColor: "#4c4c4c",
-          minHeight:600+"px"
+		  backgroundColor: "#b0c5e0",
+          minHeight:630+"px",
+          
         }}
       >
-          <div>
-        <form onSubmit={searchDrug} style={{ width: "50%" }}>
-          <h1>Search Page</h1>
-          <FormControl margin="normal" fullWidth>
-            <InputLabel htmlFor="novelName">Drug Name</InputLabel>
-            <Input id="novelName" value={drug} onChange={ e => setDrug(e.target.value) } type="text" required/>
-          </FormControl>
+        <div>
+          <form onSubmit={searchDrug} style={{ width: "50%" ,marginLeft:"25%",padding:20+"px"}}>
+            <img alt ={"Kayan"}src={"https://www.kayan-healthcare.com/static/media/Kayan-Healthcare-Logo.422de27a.svg"} style={{width:"15%",height:"7.5%"}} />
+            <FormControl margin="normal" fullWidth>
+              <InputLabel htmlFor="novelName">Drug Name</InputLabel>
+              <Input id="novelName" value={drug} onChange={ e => setDrug(e.target.value) } type="text" required/>
+            </FormControl>
 
-          <FormControl margin="normal" fullWidth>
-            <InputLabel htmlFor="desc">Disease Name</InputLabel>
-            <Input id="desc" value={disease} onChange={ e => setDisease(e.target.value) } type="desc" required/>
-          </FormControl>
-        <FormControl >
-        <InputLabel htmlFor="age-native-simple">Type:</InputLabel>
-        <Select
-          native
-          value={type}
-          onChange={ e => setType(e.target.value) }
-        >
-          <option aria-label="None" value={1} >1</option>
-          <option aria-label="None" value={2} >2</option>
+            <FormControl margin="normal" fullWidth>
+              <InputLabel htmlFor="desc">Disease Name</InputLabel>
+              <Input id="desc" value={disease} onChange={ e => setDisease(e.target.value) } type="desc" required/>
+            </FormControl>
+          <FormControl >
+          <InputLabel htmlFor="age-native-simple">Type:</InputLabel>
+          <Select
+            native
+            value={type}
+            onChange={ e => setType(e.target.value) }
+          >
+            <option aria-label="None" value={1} >1</option>
+            <option aria-label="None" value={2} >2</option>
 
-        </Select>
-        </FormControl>
-        <div ><br></br>
-          <Button type="submit" className="orange" variant="contained" size="medium">
-              Search 
-          </Button>
-        </div>
-          
-        </form>
+          </Select>
+          </FormControl>
+          <div ><br></br>
+            <Button type="submit" className="orange" variant="contained" size="medium">
+                Search 
+            </Button>
+          </div>
+            
+          </form>
         </div>
         {resultf?
-            // console.log(resultf)
-        
-        <div className="container d-flex justify-content-center align-items-center h-100">
-            <Show resultf={resultf}/>
-        </div>:""
+          <div className="container d-flex justify-content-center align-items-center h-100">
+              <Show resultf={resultf}/>
+          </div>:""
         }
       </div>
 
-            
+      
+        
+        
+         
         </>
     )
 }

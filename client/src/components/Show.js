@@ -4,8 +4,8 @@ const Show = (props) => {
     const{resultf}=props
     return (
         <div className="row">
-                <h1>{resultf.Response["drug"][0]}</h1>
-                <p>{resultf.Response["description"][0]}</p>   
+                <h1>Drug:{resultf.Response["drug"][0]}</h1>
+                <p>Description:{resultf.Response["description"][0]}</p>   
                     
             </div>
     )
