@@ -41,17 +41,17 @@ const builder = new xml.Builder({
   renderOpts: { 'pretty': false }
 });
 
-const bustHeaders = (request, response, next) => {
-  request.app.isXml = false;
+// const bustHeaders = (request, response, next) => {
+//   request.app.isXml = false;
 
-  if (request.headers['content-type'] === 'text/xml'
-    || request.headers['accept'] === 'text/xml'
-  ) {
-    request.app.isXml = true;
-  }
+//   if (request.headers['content-type'] === 'text/xml'
+//     || request.headers['accept'] === 'text/xml'
+//   ) {
+//     request.app.isXml = true;
+//   }
 
-  next();
-};
+//   next();
+// };
 
 const buildResponse = (response, statusCode, data, preTag) => {
   response.format({
@@ -65,7 +65,7 @@ const buildResponse = (response, statusCode, data, preTag) => {
   });
 };
 
-app.post("/kayan", bustHeaders, xmlparser(xmlOptions), async (request, response) => {
+app.post("/kayan", xmlparser(xmlOptions), async (request, response) => {
   const { drug, disease, type } = (request.body['Request'] || request.body);
   console.log(drug);
   if (request.app.isXml) {
