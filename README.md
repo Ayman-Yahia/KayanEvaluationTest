@@ -17,9 +17,9 @@ request e.g.:
 </request >
 
 response eg:
-<responses>
-  with atag for each field in the retrieved record 
-</response>
+--<responses>
+  --with atag for each field in the retrieved record 
+--</response>
 
 3-this service will parse the request and search in the table for the match and return the response per the up details.
 
