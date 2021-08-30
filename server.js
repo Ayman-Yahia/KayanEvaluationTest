@@ -81,7 +81,7 @@ app.post("/kayan", bustHeaders, xmlparser(xmlOptions), async (request, response)
     }
   );
 });
-app.get("/kayan/:drug/:disease/:type", bustHeaders, xmlparser(xmlOptions), async (request, response) => {
+app.get("/kayan/:drug/:disease/:type", async (request, response) => {
   const { drug, disease, type }=request.params
   console.log(drug);
   if (request.app.isXml) {
