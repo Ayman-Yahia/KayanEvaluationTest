@@ -1,8 +1,12 @@
 # KayanEvaluationTest
 1-This project was done using node , react js with a PostgreSQL
+
 the data base contain the following table 
+
 Interactions: id, decription, drugCode, diseaseCode,  type.
+
 Note:type field value could be 1 or 2
+
 2-i built an API that  receive and respond xml transactions 
 
 request e.g.:
