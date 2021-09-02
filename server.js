@@ -57,15 +57,11 @@ const buildResponse = (response, statusCode, data, preTag) => {
   response.format({
     'text/xml': () => {
       response.status(statusCode).send(builder.buildObject({ [preTag]: data }));
-    },
-    'default': () => {
-      // log the request and respond with 406
-      response.status(406).send('Not Acceptable');
     }
   });
 };
 
-app.post("/kayan", xmlparser(xmlOptions), async (request, response) => {
+app.get("/kayan", xmlparser(xmlOptions), async (request, response) => {
   const { drug, disease, type } = (request.body['Request'] || request.body);
   console.log(drug);
   if (request.app.isXml) {
@@ -81,21 +77,21 @@ app.post("/kayan", xmlparser(xmlOptions), async (request, response) => {
     }
   );
 });
-app.get("/kayan/:drug/:disease/:type", async (request, response) => {
-  const { drug, disease, type }=request.params
-  if (request.app.isXml) {
-    response.setHeader('Content-Type', 'application/xml');
-  }
-  await pool.query(
-    "SELECT * FROM interactions WHERE drug= $1 and disease=$2 and type=$3",[drug,disease,type],(err,res)=>{
-      if(!err){
-        return buildResponse(response, 200, res.rows, 'Response');
-      }else{
-        return buildResponse(response, 500, { message: 'INTERNAL SERVER ERROR' })
-      }
-    }
-  );
-});
+// app.get("/kayan/:drug/:disease/:type", async (request, response) => {
+//   const { drug, disease, type }=request.params
+//   if (request.app.isXml) {
+//     response.setHeader('Content-Type', 'application/xml');
+//   }
+//   await pool.query(
+//     "SELECT * FROM interactions WHERE drug= $1 and disease=$2 and type=$3",[drug,disease,type],(err,res)=>{
+//       if(!err){
+//         return buildResponse(response, 200, res.rows, 'Response');
+//       }else{
+//         return buildResponse(response, 500, { message: 'INTERNAL SERVER ERROR' })
+//       }
+//     }
+//   );
+// });
 // app.post('/kayans', bustHeaders, xmlparser(xmlOptions), async  (request, response) => {
 //   const { drug,description, disease, type } = (request.body['request'] || request.body);
 //       await pool.query(

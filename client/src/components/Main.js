@@ -1,6 +1,5 @@
 import React,{useState} from 'react'
 import axios from 'axios'
-import xml2js from 'xml2js'
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import XMLParser from 'react-xml-parser';
@@ -15,7 +14,6 @@ const Main = () => {
     const[disease,setDisease]=useState("")
     const[type,setType]=useState(1)
     const[resultf,setResultf]=useState(null)
-    const [loaded,setLoaded]=useState(false)
     const searchDrug=(e)=>{
         const xmlData = `
         <Request>
@@ -29,16 +27,15 @@ const Main = () => {
         };
         e.preventDefault()
         
-        axios.post('http://localhost:8000/kayan',xmlData,config)
+        axios.get('http://localhost:8000/kayan',xmlData,config)
           .then((response ) => {
               // converting xml response to json file for using in show component
               setResultf(new XMLParser().parseFromString(response.data))
+              
             })
           .catch((err) => {
-              // alert("The Durg you trying to find doesn't exist or there is an input error!")
               console.log(err);
           })
-        
         setDrug("")
         setDisease("")
         setType(1)
@@ -86,20 +83,13 @@ const Main = () => {
             
           </form>
         </div>
-        {
-          
-        resultf?
-          // console.log(resultf)
+        {resultf?
           <div className="container d-flex justify-content-center align-items-center h-100">
               <Show result={resultf}/>
-          </div>:""
+          </div>
+          :""
         }
       </div>
-
-      
-        
-        
-         
         </>
     )
 }
